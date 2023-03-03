@@ -62,7 +62,7 @@
 </template>
 
 <script>
-
+import { login } from '@/api/user'
 import { valiMobile } from '@/utils/validate'
 
 export default {
@@ -73,7 +73,7 @@ export default {
     }
     return {
       loginForm: {
-        mobile: '15527162330',
+        mobile: '13800000002',
         password: '111111'
       },
       loginRules: {
@@ -105,9 +105,11 @@ export default {
       })
     },
     handleLogin() {
-      this.$refs.loginForm.validate(valid => {
+      this.$refs.loginForm.validate(async valid => {
         if (valid) {
           this.loading = true
+          const res = await login(this.loginForm)
+          console.log('res', res)
           this.$store.dispatch('user/login', this.loginForm).then(() => {
             this.$router.push({ path: this.redirect || '/' })
             this.loading = false

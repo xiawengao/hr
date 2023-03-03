@@ -40,9 +40,11 @@ module.exports = {
     proxy: {
       // 当地址中有/api的时候会触发代理服务器
       '/api': {
-        target: 'http://ihrm-java.itheima.net/', // 需要代理的地址 这里不用写Api
+        target: 'http://ihrm.itheima.net', // 需要代理的地址 这里不用写Api
         changeOrigin: true // 是否跨域
-
+        // pathRewrite: {
+        //   '^/api': ''
+        // }
       }
     }
   },
