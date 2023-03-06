@@ -1,6 +1,7 @@
 import { login } from '@/api/user'
 
 export default {
+  namespaced: true,
   state: {
     token: ''
   },

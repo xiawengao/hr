@@ -63,6 +63,7 @@
 
 <script>
 import { valiMobile } from '@/utils/validate'
+import { mapActions } from 'vuex'
 
 export default {
   name: 'Login',
@@ -93,6 +94,7 @@ export default {
     }
   },
   methods: {
+    ...mapActions(['user/login']), // 引入方法
     showPwd() {
       if (this.passwordType === 'password') {
         this.passwordType = ''
@@ -104,21 +106,23 @@ export default {
       })
     },
     handleLogin() {
-      this.$refs.loginForm.validate(async valid => {
-        if (valid) {
-          this.loading = true
-          this.$store.dispatch('user/login', this.loginForm).then(() => {
-            this.$router.push({ path: this.redirect || '/' })
+      this.$refs.loginForm.validate(async isOk => {
+        if (isOk) {
+          try {
+            // 校验成功 调用action
+            this.loading = true
+            await this['user/login'](this.loginForm)
+            this.$router.push('/dashboard')
+          } catch (error) {
+            console.log(error)
+          } finally {
             this.loading = false
-          }).catch(() => {
-            this.loading = false
-          })
-        } else {
-          console.log('error submit!!')
-          return false
+          }
         }
       })
     }
+    // ref 可以获取一个dom 元素
+    // ref 作用到组件的时候 可以获取改组件的实例   this
   }
 }
 </script>
