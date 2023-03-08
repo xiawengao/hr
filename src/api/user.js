@@ -10,8 +10,13 @@ export function login(data) {
   return request.post('/sys/login', data)
 }
 
+/**
+ *获取用户资料接口
+ * @param {*} token
+ * @returns
+ */
 export function getInfo(token) {
-
+  return request.post('/sys/profile')
 }
 
 export function logout() {

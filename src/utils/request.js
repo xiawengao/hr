@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { Message } from 'element-ui'
+import store from '@/store'
 const TimeOut = 3600 // 定义超时时间
 
 const service = axios.create({
@@ -7,7 +8,17 @@ const service = axios.create({
   timeout: TimeOut
 })
 
-service.interceptors.request.use()
+service.interceptors.request.use(config => {
+  // config 是请求的配置信息
+  // 注入我们的token
+  const token = store.getters.token
+  if (store.getters.token) {
+    config.headers['Authorization'] = `Bearer ${token}`
+  }
+  return config // 必须要返回的
+}, error => {
+  return Promise.reject(error)
+})
 // 响应拦截器
 service.interceptors.response.use(response => {
   // axios 默认添加了 一层data

@@ -54,3 +54,9 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.sidebar-container {
+ background-color: #001528;
+}
+</style>
