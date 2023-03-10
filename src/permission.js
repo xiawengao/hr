@@ -12,7 +12,7 @@ import 'nprogress/nprogress.css' // 引入进度条样式
 // next(false) 跳转终止
 // next(地址) 跳转到某个地址
 const whiteList = ['/login', '/404']
-router.beforeEach((to, from, next) => {
+router.beforeEach(async(to, from, next) => {
   nprogress.start()
   if (store.getters.token) {
     // 如果有token
@@ -20,6 +20,9 @@ router.beforeEach((to, from, next) => {
       // 如果要访问的页面是登录页
       next('/') // 跳转到主页
     } else {
+      if (!store.getters.userId) {
+        await store.dispatch('user/getUserInfo')
+      }
       next()
     }
   } else {

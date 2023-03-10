@@ -15,7 +15,7 @@ export function login(data) {
  * @param {*} token
  * @returns
  */
-export function getInfo(token) {
+export function getUserInfo() {
   return request.post('/sys/profile')
 }
 
