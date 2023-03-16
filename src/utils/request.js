@@ -42,7 +42,14 @@ service.interceptors.response.use(response => {
     return Promise.reject(new Error(message))
   }
 }, error => {
-  Message.error(error.message) // 提示错误信息
+  // error 信息 里面的 response 的对象
+  if (error.response && error.response.data && error.response.data.code === 10002) {
+    // 当等于10002的时候 表示 后端告诉我token超时了
+    store.dispatch('user/lgout') // 退出登录
+    router.push('/login')
+  } else {
+    Message.error(error.message) // 提示错误信息
+  }
   return Promise.reject(error)
 })
 
