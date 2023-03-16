@@ -29,7 +29,10 @@ export default {
       console.log('result', result)
       context.commit('setToken', result)
     },
-
+    lgout(context, data) {
+      context.commit('removeToken')
+      context.commit('removeUserInfo')
+    },
     async getUserInfo(context, data) {
       const result = await getUserInfo()
       // 获取用户详情 用户的详情数据
