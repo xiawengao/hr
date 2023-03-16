@@ -1,18 +1,20 @@
 import { login, getUserInfo, getUserDetailById } from '@/api/user'
+import { getToken, removeToken, setTimeStamp, setToken } from '@/utils/auth'
+
 export default {
   namespaced: true,
   state: {
-    token: localStorage.getItem('TOKEN') || '',
+    token: getToken(),
     userInfo: {} // 这里定义一个空对象 为什么要定义一个空对象
   },
   mutations: {
     setToken(state, token) {
       state.token = token
-      localStorage.setItem('TOKEN', token)
+      setToken(token)
     },
     removeToken(state) {
       state.token = null
-      localStorage.removeItem('TOKEN')
+      removeToken()
     },
     setUserInfo(state, result) {
       // 更新一个对象
@@ -28,7 +30,9 @@ export default {
       const result = await login(data)
       console.log('result', result)
       context.commit('setToken', result)
+      setTimeStamp()
     },
+    // 退出登录
     lgout(context, data) {
       context.commit('removeToken')
       context.commit('removeUserInfo')
