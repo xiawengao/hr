@@ -1,5 +1,4 @@
-import { login, getUserInfo } from '@/api/user'
-
+import { login, getUserInfo, getUserDetailById } from '@/api/user'
 export default {
   namespaced: true,
   state: {
@@ -33,7 +32,10 @@ export default {
 
     async getUserInfo(context, data) {
       const result = await getUserInfo()
-      context.commit('setUserInfo', result)
+      // 获取用户详情 用户的详情数据
+      const baseInfo = await getUserDetailById(result.userId)
+      const obj = { ...result, ...baseInfo }
+      context.commit('setUserInfo', obj)
       return result // 这里为什么要使用return呢 这里是给我们后期做权限的时候 留下的伏笔
     }
   }

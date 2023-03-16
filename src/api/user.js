@@ -19,6 +19,10 @@ export function getUserInfo() {
   return request.post('/sys/profile')
 }
 
+export function getUserDetailById(userId) {
+  return request.get(`/sys/user/${userId}`)
+}
+
 export function logout() {
 
 }

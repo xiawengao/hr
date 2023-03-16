@@ -15,7 +15,7 @@ const whiteList = ['/login', '/404']
 router.beforeEach(async(to, from, next) => {
   nprogress.start()
   if (store.getters.token) {
-    // 如果有token
+    // 如果有token的情况下 才能获取资料
     if (to.path === '/login') {
       // 如果要访问的页面是登录页
       next('/') // 跳转到主页
